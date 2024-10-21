@@ -28,4 +28,8 @@ public class SchemasUtil {
     .putField("identifier_new", FieldType.STRING)
     .putField("first_name", FieldType.STRING)
     .build();
+
+  public static final Schema avro6 = new SchemaBuilder("avro_schema")
+    .putField("identifier_new", FieldType.STRING, null, "identifier")
+    .build();
 }

@@ -1,5 +1,7 @@
 package demo;
 
+import java.util.Optional;
+
 public class FieldValue {
   public enum FieldType {
     INT,
@@ -8,27 +10,41 @@ public class FieldValue {
   }
 
   private FieldType type;
-  private String defaultValue;
+  private Optional<String> defaultValue;
+  private Optional<String> alias;
 
   public FieldValue(FieldType type) {
     this.type = type;
+    this.defaultValue = Optional.empty();
+    this.alias = Optional.empty();
   }
 
   public FieldValue(FieldType type, String defaultValue) {
     this.type = type;
-    this.defaultValue = defaultValue;
+    this.defaultValue = Optional.of(defaultValue);
+    this.alias = Optional.empty();
+  }
+
+  public FieldValue(FieldType type, String defaultValue, String alias) {
+    this.type = type;
+    this.defaultValue = Optional.empty();
+    this.alias = Optional.of(alias);
   }
 
   public FieldType getType() {
     return type;
   }
 
-  public String getDefaultValue() {
+  public Optional<String> getDefaultValue() {
     return this.defaultValue;
   }
 
   public boolean isRequired() {
-    return this.defaultValue == null;
+    return this.defaultValue.isEmpty();
+  }
+
+  public Optional<String> getAlias() {
+    return this.alias;
   }
 
   @Override
@@ -43,7 +59,11 @@ public class FieldValue {
 
     FieldValue ft = (FieldValue) o;
 
-    return this.type == ft.getType() && this.getDefaultValue() == ft.getDefaultValue();
+    return this.type.equals(ft.getType())
+          && (this.getDefaultValue().isPresent() == ft.getDefaultValue().isPresent())
+          && (this.getDefaultValue().isEmpty() || this.getDefaultValue().get().equals(ft.getDefaultValue().get())
+          && (this.alias.isPresent() == ft.getDefaultValue().isPresent())
+          && (this.getAlias().isEmpty() || this.getAlias().get().equals(ft.getAlias().get())));
   }
 
   @Override
