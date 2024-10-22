@@ -11,20 +11,10 @@ public class App {
     public static void main(String[] args) {
 
         SchemaRegistry schemaRegistry = new SchemaRegistry(CompatibilityType.BACKWARD);
-        Schema mySchema = new SchemaBuilder("avro_schema_1")
-                            .putField("identifier", FieldType.STRING)
-                            .putField("first_name", FieldType.INT)
-                            .build();
-
-        Schema newSchema = new SchemaBuilder("avro_schema_1")
-                            .putField("identifier", FieldType.STRING)
-                            .putField("first_name", FieldType.INT)
-                            .putField("date", FieldType.STRING, "2000-01-01")
-                            .build();
 
         try {
-            schemaRegistry.putSchema(mySchema);
-            schemaRegistry.putSchema(newSchema);
+            schemaRegistry.putSchema(SchemasUtil.avro1);
+            schemaRegistry.putSchema(SchemasUtil.avro6);
         } catch (SchemaEvolutionException exception) {
             System.out.println(exception);
         }

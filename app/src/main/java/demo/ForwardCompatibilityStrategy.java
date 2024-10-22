@@ -10,7 +10,11 @@ public class ForwardCompatibilityStrategy implements CompatibilityStrategy {
     Schema latestSchema = schemaHistory.getLast();  
 
     for (Entry<String, FieldValue> field : latestSchema.getAllFields().entrySet()) {
-      if (field.getValue().isRequired() && !newSchema.containsField(field)) {
+      boolean fieldIsRequired = field.getValue().isRequired();
+      boolean fieldRemoved = !newSchema.containsField(field);
+
+      if (fieldIsRequired && fieldRemoved) {
+        
         throw new SchemaEvolutionException("Cannot delete required field.");
       }
     }

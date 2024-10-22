@@ -9,9 +9,21 @@ public class BackwardCompatibilityStrategy implements CompatibilityStrategy {
   public void checkCompatibility(Schema newSchema, List<Schema> schemaHistory) throws SchemaEvolutionException {
     Schema latestSchema = schemaHistory.getLast();
 
+
     for (Entry<String, FieldValue> field : newSchema.getAllFields().entrySet()) {
-      if (field.getValue().isRequired() && !latestSchema.containsField(field)) {
-        throw new SchemaEvolutionException("Cannot add required field.");
+      boolean fieldIsRequired = field.getValue().isRequired();
+      boolean fieldIsNew = !latestSchema.containsField(field);
+      if (fieldIsRequired && fieldIsNew) {
+        
+        boolean fieldHasAlias = field.getValue().getAlias().isPresent();
+        if (!fieldHasAlias) {
+          throw new SchemaEvolutionException("Cannot add required field.");
+        }
+
+        boolean aliasReferenceExists = latestSchema.hasField(field.getValue().getAlias().get());
+        if (!aliasReferenceExists) {
+          throw new SchemaEvolutionException("Invalid alias: " + field.getValue().getAlias().get());
+        }
       }
     }
   }

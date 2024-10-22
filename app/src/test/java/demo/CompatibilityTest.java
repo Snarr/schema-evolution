@@ -22,7 +22,7 @@ public class CompatibilityTest {
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD, SchemasUtil.avro1, SchemasUtil.avro3));
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD, SchemasUtil.avro1, SchemasUtil.avro4));
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD, SchemasUtil.avro1, SchemasUtil.avro5));
-    // assertEquals(true, canEvolveSchema(CompatibilityType.BACKWARD, SchemasUtil.avro1, SchemasUtil.avro6));
+    assertEquals(true, canEvolveSchema(CompatibilityType.BACKWARD, SchemasUtil.avro1, SchemasUtil.avro6));
   }
 
   @Test
@@ -31,7 +31,7 @@ public class CompatibilityTest {
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD_TRANSITIVE, SchemasUtil.avro2, SchemasUtil.avro3));
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD_TRANSITIVE, SchemasUtil.avro2, SchemasUtil.avro4));
     assertEquals(false, canEvolveSchema(CompatibilityType.BACKWARD_TRANSITIVE, SchemasUtil.avro2, SchemasUtil.avro5));
-    // assertEquals(true, canEvolveSchema(CompatibilityType.BACKWARD_TRANSITIVE, SchemasUtil.avro2, SchemasUtil.avro6));
+    assertEquals(true, canEvolveSchema(CompatibilityType.BACKWARD_TRANSITIVE, SchemasUtil.avro2, SchemasUtil.avro6));
   }
 
   @Test
@@ -40,7 +40,7 @@ public class CompatibilityTest {
     assertEquals(true, canEvolveSchema(CompatibilityType.FORWARD, SchemasUtil.avro1, SchemasUtil.avro3)); 
     assertEquals(false, canEvolveSchema(CompatibilityType.FORWARD, SchemasUtil.avro1, SchemasUtil.avro4)); 
     assertEquals(false, canEvolveSchema(CompatibilityType.FORWARD, SchemasUtil.avro1, SchemasUtil.avro5)); 
-    // assertEquals(false, canEvolveSchema(CompatibilityType.FORWARD, SchemasUtil.avro1, SchemasUtil.avro6));
+    assertEquals(false, canEvolveSchema(CompatibilityType.FORWARD, SchemasUtil.avro1, SchemasUtil.avro6));
   }
 
   @Test
